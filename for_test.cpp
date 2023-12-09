@@ -1,16 +1,15 @@
 #include <iostream>
+#include <string>
 
-int main ()
-{
-    const int ROWS = 10;
-    const int COLUM = 10;
+int main() {
+    std::string input;
 
-    for (int i = 0; i < ROWS; ++i)
-    {
-        for (int j = 0; j < COLUM; ++j)
-        {
-            std::cout << i << "," << j << " ";
-        }
-        std::cout << std::endl;
-    }
+    // Считывание строки с использованием getline
+    std::cout << "Введите строку: ";
+    std::getline(std::cin, input);
+
+    // Вывод введенной строки
+    std::cout << "Вы ввели: " << input << std::endl;
+
+    return 0;
 }
