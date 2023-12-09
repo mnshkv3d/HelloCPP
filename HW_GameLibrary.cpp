@@ -24,6 +24,7 @@ int main()
     games.push_back("Max Payne");
     games.push_back("Hitman");
     games.push_back("Serious Sam");
+    
     string userinput;
 
     while (userinput != "exit")
@@ -35,5 +36,11 @@ int main()
         cout << "\nType 'exit' if your want to exit this program" << endl;
         cout << "\n\n$:";
         cin >> userinput;
+
+        if ( userinput == "list")
+        {
+            
+        }
+        
     }
 }
