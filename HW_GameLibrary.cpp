@@ -5,9 +5,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <ctime>
-#include <cctype>
-#include <random>
 #include <iterator>
 
 using std::cin;
