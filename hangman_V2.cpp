@@ -15,6 +15,9 @@ using std::find;
 using std::string;
 using std::vector;
 
+char userInput(string textToPrint);
+//char letterCheck(char letterToCheck);
+
 int main()
 {
     // preparing
@@ -41,10 +44,8 @@ int main()
              << used << endl;
         cout << "\nSo far, the word is:\n"
              << soFar << endl;
-        char guess;
-        cout << "\n\nEnter your guess: ";
-        cin >> guess;
-        guess = std::toupper(guess); // convert to upper register
+        char guess = userInput("Enter your guess: ");
+        
         while (used.find(guess) != string::npos)
         {
             cout << "\nYou've already guessed " << guess << endl;
@@ -55,7 +56,7 @@ int main()
         used += guess;
         if (THE_WORD.find(guess) != string::npos)
         {
-            cout << "That's right!" << guess << " is in the word.\n";
+            cout << "That's right! " << guess << " is in the word.\n";
             // update var soFar by adding new guessed letter;
             for (int i = 0; i < THE_WORD.length(); ++i)
             {
@@ -82,4 +83,13 @@ int main()
     }
     cout << "\nThe word was " << THE_WORD << endl;
     return 0;
+}
+
+char userInput(string textToPrint)
+{
+    char guessLetter;
+    cout << textToPrint;
+    cin >> guessLetter;
+    guessLetter = std::toupper(guessLetter); // convert to upper register
+    return guessLetter;
 }
