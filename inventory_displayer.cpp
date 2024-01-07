@@ -12,8 +12,6 @@ using std::find;
 using std::string;
 using std::vector;
 
-// vec - constant reference to string vector
-
 void display(const vector<string>& inventory);
 
 int main()
@@ -25,6 +23,8 @@ int main()
     display(inventory);
     return 0;
 }
+
+// vec - constant reference to string vector
 
 void display(const vector<string>& vec)
 {
