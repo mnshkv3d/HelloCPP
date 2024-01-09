@@ -62,9 +62,9 @@ void instructions()
     std::cout << "Make your move known by entering a number, 0 - 8. The number\n";
     std::cout << "corresponds to the disired board position, as illustrated:\n\n";
     std::cout << "0 | 1 | 2\n";
-    std::cout << "-----------";
+    std::cout << "----------\n";
     std::cout << "3 | 4 | 5\n";
-    std::cout << "-----------";
+    std::cout << "----------\n";
     std::cout << "6 | 7 | 8\n\n";
     std::cout << "Prepare yourself, human. The battle is about to begin.\n\n";
 }
@@ -94,7 +94,7 @@ int askNumner(std::string question, int high, int low)
 char humanPiece()
 {
     char go_first = askYesNo("Do you require the first move?");
-    if (go_first = 'y')
+    if (go_first == 'y')
     {
         std::cout << "\nThen take the first move. You will need it.\n";
         return X;
@@ -110,7 +110,7 @@ char opponent(char piece)
 {
     if (piece == X)
     {
-        return 0;
+        return O;
     }
     else
     {
@@ -121,9 +121,9 @@ char opponent(char piece)
 void displayBoard(const std::vector<char> &board)
 {
     std::cout << "\n\t" << board[0] << " | " << board[1] << " | " << board[2];
-    std::cout << "-----------";
+    std::cout << "\n\t" << "-----------";
     std::cout << "\n\t" << board[3] << " | " << board[4] << " | " << board[5];
-    std::cout << "-----------";
+    std::cout << "\n\t" << "-----------";
     std::cout << "\n\t" << board[6] << " | " << board[7] << " | " << board[8];
     std::cout << "\n\n";
 }
@@ -162,4 +162,90 @@ char winner(const std::vector<char> &board)
 inline bool isLegal(int move, const std::vector<char> &board)
 {
     return (board[move] == EMPTY);
+}
+
+int humanMove(const std::vector<char>& board, char human)
+{
+    int move = askNumner("Where will you move?", (board.size() - 1));
+    while (!isLegal(move, board))
+    {
+        std::cout << "\nThat square is already occupied, foolish human.\n";
+        move = askNumner("Where will you move?", (board.size() - 1));
+
+    }
+    std::cout << "Fine...\n";
+    return move;
+}
+
+int computerMove(std::vector<char> board, char computer)
+{
+    unsigned int move = 0;
+    bool found = false;
+    //if AI can win in next move it choose it
+    while (!found && move < board.size())
+    {
+        if (isLegal(move, board))
+        {
+            board[move] = computer;
+            found = winner(board) == computer;
+            board[move] = EMPTY;
+        }
+        if(!found)
+        {
+            ++move;
+        }
+    }
+    //else if human can win in the next move - block it
+    if(!found)
+    {
+        move = 0;
+        char human = opponent(computer);
+        while(!found && move < board.size())
+        {
+            if(isLegal(move, board))
+            {
+                board[move] = human;
+                found = winner(board) == human;
+                board[move] = EMPTY;
+            }
+            if(!found)
+            {
+                ++move;
+            }
+        }
+    }
+    if(!found)
+    {
+        move = 0;
+        unsigned int i = 0;
+        const int BEST_MOVES[] = {4, 0, 2, 6, 8, 1, 3, 5, 7};
+        //choose the best cell
+        while(!found && i < board.size())
+        {
+            move = BEST_MOVES[i];
+            if(isLegal(move, board))
+            {
+                found = true;
+            }
+            ++i;
+        }
+    }
+    std::cout << "I shall take square number " << move << std::endl;
+    return move;
+}
+
+void announceWinner(char winner, char computer, char human)
+{
+    if( winner == computer)
+    {
+        std::cout << winner << "'s won!\n";
+    }
+    else if( winner == human)
+    {
+        std::cout << winner << "'s won!\n";
+    }
+    else
+    {
+        std::cout << "It's a tie.\n";
+    }
 }
