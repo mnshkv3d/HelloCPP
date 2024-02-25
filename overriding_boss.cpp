@@ -1,6 +1,6 @@
 #include <iostream>
 
-class Enemy
+class Enemy //создание базового класса врага
 {
 public:
     Enemy(int damage = 10);
@@ -10,7 +10,7 @@ public:
 private:
     int m_Damage;
 };
-Enemy::Enemy(int damage) : m_Damage(damage) {}
+Enemy::Enemy(int damage) : m_Damage(damage) {} //конструктор базового класса
 void Enemy::Taunt() const
 {
     std::cout << "The enemy says he will fight you.\n";
@@ -19,14 +19,14 @@ void Enemy::Attack() const
 {
     std::cout << "Attack! Inflicts " << m_Damage << " damage points.\n";
 }
-class Boss : public Enemy
+class Boss : public Enemy //создание класса босса
 {
 public:
     Boss(int damage = 30);
     void virtual Taunt() const;
     void virtual Attack() const;
 };
-Boss::Boss(int damage) : Enemy(damage) {}
+Boss::Boss(int damage) : Enemy(damage) {} //конструктор объекта босса
 
 void Boss::Taunt() const
 {
