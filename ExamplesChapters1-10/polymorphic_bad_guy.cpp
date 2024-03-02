@@ -50,5 +50,11 @@ void Boss::Attack() const
 }
 int main()
 {
+    std::cout << "Calling Attack() on Boss object through pointer to Enemy:\n";
+    Enemy* pBadGuy = new Boss();
+    pBadGuy->Attack();
+    std::cout << "\n\nDeleting pointer to Enemy:\n";
+    delete pBadGuy;
+    pBadGuy = 0;
     return 0;
 }
