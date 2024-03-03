@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <random>
 
 class Card
 {
@@ -295,8 +296,42 @@ void Deck::Populate()
     }
 }
 
-void Deck::Shuffle() {}
+void Deck::Shuffle()
+{
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(m_Cards.begin(), m_Cards.end(), g);
+}
 
+void Deck::Deal(Hand& aHand)
+{
+    if (!m_Cards.empty())
+    {
+        aHand.Add(m_Cards.back());
+        m_Cards.pop_back();
+    }
+    else
+    {
+        std::cout << "Out of cards. Unable to deal.";
+    }
+}
+
+void Deck::AdditionalCards(GenericPlayer& aGenericPlayer)
+{
+    std::cout << std::endl;
+    // continue to deal a card as long as generic player isn't busted
+    // and wants another hit
+    while (!(aGenericPlayer.IsBasted()) && aGenericPlayer.IsHitting())
+    {
+        Deal(aGenericPlayer);
+        std::cout << aGenericPlayer << std::endl;
+
+        if (aGenericPlayer.IsBasted())
+        {
+            aGenericPlayer.Bust();
+        }
+    }
+}
 int main()
 {
     std::cout << "Temp message!\n\n\n";
