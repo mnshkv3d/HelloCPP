@@ -243,8 +243,61 @@ bool House::IsHitting() const
 }
 
 void House::FlipFirstCard()
+{
+    if (!(m_Cards.empty()))
+    {
+        m_Cards[0]->Flip();
+    }
+    else
+    {
+        std::cout << "No card to flip!\n";
+    }
+}
 
-    int main()
+class Deck : public Hand
+{
+public:
+    Deck();
+
+    virtual ~Deck();
+
+    // create a standart deck of 52 cards
+    void Populate();
+
+    // shuffle cards
+    void Shuffle();
+
+    // deal one card to a hand
+    void Deal(Hand& aHand);
+
+    // give additional cards to a generic player
+    void AdditionalCards(GenericPlayer& aGenericPlayer);
+};
+
+Deck::Deck()
+{
+    m_Cards.reserve(52);
+    Populate();
+}
+
+Deck::~Deck() {}
+
+void Deck::Populate()
+{
+    Clear();
+    // create standart deck
+    for (int s = Card::CLUBS; s <= Card::SPADES; ++s)
+    {
+        for (int r = Card::ACE; r <= Card::KING; ++r)
+        {
+            Add(new Card(static_cast<Card::rank>(r), static_cast<Card::suit>(s)));
+        }
+    }
+}
+
+void Deck::Shuffle() {}
+
+int main()
 {
     std::cout << "Temp message!\n\n\n";
     return 0;
